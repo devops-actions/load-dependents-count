@@ -13,7 +13,7 @@ RUN apt-get update && \
 RUN pip install --no-cache-dir playwright
 
 # Install Chromium browser
-RUN playwright install chromium
+RUN playwright install chromium --with-deps
 
 # Copy action source
 COPY src/ /action/src/
