@@ -10,7 +10,8 @@ RUN apt-get update && \
     rm -rf /var/lib/apt/lists/*
 
 # Install Python dependencies
-RUN pip install --no-cache-dir playwright
+COPY requirements.txt /action/requirements.txt
+RUN pip install --no-cache-dir -r /action/requirements.txt
 
 # Install Chromium browser
 RUN playwright install chromium
