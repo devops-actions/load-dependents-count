@@ -1,0 +1,39 @@
+name: "Load Dependents Count"
+description: "Scrape GitHub dependents counts for repositories using Playwright browser automation"
+author: "devops-actions"
+
+branding:
+  icon: "bar-chart-2"
+  color: "blue"
+
+inputs:
+  repos:
+    description: >
+      JSON array of "org/repo" strings to fetch dependents for.
+      Example: '["devops-actions/action-get-tag", "devops-actions/actionlint"]'
+      Either this or scope-file must be provided.
+    required: false
+  scope-file:
+    description: >
+      Path to a scope.json file defining repos to monitor.
+      Expected format: { "github.com": { "org": { "included": ["repo1", "repo2"] } } }
+      Either this or repos must be provided.
+    required: false
+  output-file:
+    description: "Path to write the JSON results file"
+    required: false
+    default: "repo-usage.json"
+
+outputs:
+  results:
+    description: "JSON string with dependent counts, e.g. {\"org/repo\": 123}"
+  output-file:
+    description: "Path to the generated JSON file"
+
+runs:
+  using: "docker"
+  image: "Dockerfile"
+  env:
+    INPUT_REPOS: ${{ inputs.repos }}
+    INPUT_SCOPE_FILE: ${{ inputs.scope-file }}
+    INPUT_OUTPUT_FILE: ${{ inputs.output-file }}

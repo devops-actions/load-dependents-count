@@ -1,0 +1,46 @@
+name: "CI"
+on:
+  push:
+    branches: [main]
+    paths-ignore: ["**.md"]
+  pull_request:
+    branches: [main]
+    paths-ignore: ["**.md"]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build Docker image
+        run: docker build -t load-dependents-count .
+
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Run action with inline repos
+        uses: ./
+        id: dependents
+        with:
+          repos: '["devops-actions/action-get-tag"]'
+          output-file: test-output.json
+
+      - name: Verify output file exists
+        run: |
+          if [ ! -f test-output.json ]; then
+            echo "::error::Output file not found"
+            exit 1
+          fi
+          echo "Output file contents:"
+          cat test-output.json
+
+      - name: Verify action outputs
+        run: |
+          if [ -z '${{ steps.dependents.outputs.results }}' ]; then
+            echo "::error::results output is empty"
+            exit 1
+          fi
+          echo "Results: ${{ steps.dependents.outputs.results }}"
