@@ -1,5 +1,8 @@
 FROM python:3.12-slim
 
+# Fix Playwright browser path so it doesn't depend on $HOME (GitHub Actions sets HOME=/github/home)
+ENV PLAYWRIGHT_BROWSERS_PATH=/ms-playwright
+
 # Install system dependencies for Playwright/Chromium
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
