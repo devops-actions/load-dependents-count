@@ -1,4 +1,4 @@
-FROM python:3.12-slim
+FROM python:3.14-slim
 
 # Fix Playwright browser path so it doesn't depend on $HOME (GitHub Actions sets HOME=/github/home)
 ENV PLAYWRIGHT_BROWSERS_PATH=/ms-playwright
