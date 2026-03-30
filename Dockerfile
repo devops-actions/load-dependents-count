@@ -9,11 +9,14 @@ RUN apt-get update && \
         libxshmfence1 libx11-xcb1 libxcb1 && \
     rm -rf /var/lib/apt/lists/*
 
+# Set a fixed path for Playwright browsers so they are found regardless of $HOME at runtime
+ENV PLAYWRIGHT_BROWSERS_PATH=/ms-playwright
+
 # Install Python dependencies
 RUN pip install --no-cache-dir playwright
 
 # Install Chromium browser
-RUN playwright install chromium
+RUN playwright install chromium --with-deps
 
 # Copy action source
 COPY src/ /action/src/
