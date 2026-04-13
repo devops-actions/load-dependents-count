@@ -1,4 +1,4 @@
-FROM python:3.14-slim@sha256:fb83750094b46fd6b8adaa80f66e2302ecbe45d513f6cece637a841e1025b4ca
+FROM python:3.14-slim@sha256:bc389f7dfcb21413e72a28f491985326994795e34d2b86c8ae2f417b4e7818aa
 
 # Fix Playwright browser path so it doesn't depend on $HOME (GitHub Actions sets HOME=/github/home)
 ENV PLAYWRIGHT_BROWSERS_PATH=/ms-playwright
