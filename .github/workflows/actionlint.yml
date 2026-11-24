@@ -1,0 +1,13 @@
+name: Lint GitHub Actions workflows
+on: [push, pull_request]
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  actionlint:
+    uses: devops-actions/.github/.github/workflows/actionlint.yml@f2b5c26c77264c245360c3f1f2d279947cc86503 # v1.2.0
+    permissions:
+      contents: read
+      pull-requests: write
